@@ -1,0 +1,79 @@
+<div style = "margin-left: 40%; margin-top: 2%">
+  <% if signed_in? %>
+    <%= button_to 'Add new Post', new_post_path, :class => 'btn btn-xs btn-primary' %>
+      <%end%>
+</div>
+
+<br/>
+
+<ol class="posts">
+  <% @posts.reverse.each do |post| %>
+      <li <% if @posts.first == post %> class="first" <% end %>>
+
+        <div class="post_message_container">
+          <%@post_user = post.user_id%>
+          <%@post_owner =''%>
+          <% if  @post_user == 999 %>
+              <% @post_owner ='Anonymous user'  %>
+          <%else%>
+              <% @post_owner =post.user.name  %>
+          <%end%>
+          <h3> <%= link_to @post_owner, post.user %>
+            <%#
+              = link_to post.user.name, post.user %></h3>
+          <h4><%= link_to post.name, post %>  </h4>
+
+
+          <%= link_to post.content, post %>
+
+
+          <div class="time_ago">
+            <%= time_ago_in_words(post.created_at)%> ago
+          </div>
+          #<%= "#{post.category.title}" %>
+          <%# user3 = current_user %>
+
+
+          <% if signed_in? %>
+          <div>
+            <% if ((post.user_id==current_user.id)|| current_user.admin==2 || (current_user.admin==1&&post.user_id!=1)) %>
+
+                <%# if ((post.user_id==1)&& current_user.admin==2 ) %>
+
+
+          <div style="float:left;">
+              <%# if post.user.id == user3.id || current_user.admin == 1%>
+
+            <%= button_to "Delete", post, :method => :delete, data: {confirm: "Do you want to delete the post ?"}, :class => 'btn btn-default btn-xs'%>
+              <%# end %>
+            </div>
+            <%# if post.user.id == session[:user_id] %>
+                <div style="float:left;">
+                  <%= button_to "Edit", edit_post_path(post), :method => :get, :class => 'btn btn-default btn-xs'%>
+                </div>
+            <%# end %>
+                <% end %>
+
+                <% if can_vote?(post.id) && has_voted?(post.id)%>
+                    <div style="float:left;">
+                      <%= button_to 'Vote', {:controller => 'posts', :action => 'add_vote' , :id => post.id}, {:class => 'btn btn-default btn-xs'}%>
+                    </div>
+                <% end %>
+                <div style="float:left;">
+                  <%= button_to "Comment", post , :class => 'btn btn-default btn-xs' %>
+                </div>
+                <div style="clear:both;">
+                </div>
+                </div>
+            <%# end %>
+            <p>
+              <%= render :partial => 'posts/votes', :locals => {:post => post} %>
+            </p>
+
+
+            </div>
+        <div class="clear"></div>
+      </li>
+  <%end%>
+  <%end%>
+</ol>

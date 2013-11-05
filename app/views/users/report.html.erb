@@ -1,0 +1,24 @@
+<h3><%= link_to "Back", users_path %></h3>
+<% provide(:title, "Report") %>
+<table>
+  <tr>
+    <th style="text-align: left;">User</th>
+    <th style="text-align: left;">Total Posts Posted</th>
+    <th style="text-align: left;">Total Votes on his Posts</th>
+    <th style="text-align: left;">Total Posts voted</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+    <% @users.each do |user| %>
+        <tr>
+           <td><%= user.name %></td>
+           <td><%= user_get_posts(user.id) %></td>
+           <td><%= user_get_votes_posts(user.id) %></td>
+           <td><%= user_post_voted(user.id) %></td>
+           <td></td>
+        </tr>
+
+    <% end %>
+
+</table>

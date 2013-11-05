@@ -1,0 +1,42 @@
+<%= link_to "Back", :back %>
+<ol id="posts_list">
+  <% @results.reverse.each do |post| %>
+      <li class="first">
+        <div class="post_message_container">
+          <h3>
+          <%# if logged_in? %>
+                <%#= link_to post.user.username, post.user %>
+           <%# else %>
+          <% if post.user != nil %>
+            <%= post.user.name%>
+          <%else%>
+            Anonymous User
+          <%end%>
+           <%# end %>
+          </h3>
+          <% #if logged_in? %>
+                <%#= link_to post.message, post %>
+          <%# else %>
+
+            <h4><%= link_to post.name, post %>  </h4>
+
+
+          <%=  post.content%>  <br/>
+          Tag : <%=  post.tag%>
+          <% #end %>
+          <div class="time_ago">
+            <%= distance_of_time_in_words_to_now(post.created_at)%> ago
+          </div>
+          <h4>
+            Category :<%= "#{post.category.title}" %>
+
+          </h4>
+
+        </div>
+        <div class="clear"></div>
+      </li>
+      </br>
+      </br>
+
+  <%end%>
+</ol>

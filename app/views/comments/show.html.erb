@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Comment:</b>
+  <%= @comment.comment %>
+</p>
+
+<% #if (@comment.user_id==current_user.id)%>
+    <% if ((@comment.user_id==current_user.id)|| current_user.admin==2 || (current_user.admin==1&&@comment.user_id!=1)) %>
+
+        <td><%= link_to 'Edit', edit_comment_path(@comment) %></td>
+    <td><%= link_to 'Delete', @comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+<% end %>
+
+
+
+
+
+<%#= link_to 'Edit', edit_comment_path(@comment) %>
+
+
+<%= link_to '| Back', comments_path %>
+<br>
+<br>
+<br>
+
+

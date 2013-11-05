@@ -1,0 +1,39 @@
+<div style = "margin-left: 40%; margin-top: 2%">
+  <% if current_user.admin == 1 || current_user.admin == 2%>
+    <%= button_to 'Add new Category', new_category_path, :class => 'btn btn-xs btn-primary' %>
+  <%end%>
+</div>
+
+<br/>
+<% user2 = current_user %>
+<ol>
+  <% @categories.each do |category| %>
+      <li>
+        <%= category.title %>
+
+        <div>
+
+
+        <% if user2.admin == 2 || user2.admin==1 %>
+
+        <div style="float:left;">
+          <h3>
+          <%#= button_to 'Edit', edit_category_path(category), :class => 'btn btn-xs btn-default' %>
+          <%= button_to "Edit", edit_category_path(category), :method => :get, :class => 'btn btn-xs btn-default'%>
+            </h3>
+        </div>
+          <div style="float:left;">
+            <h3>
+          <%= button_to "Delete", category, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-xs btn-default' %>
+              </h3>
+          </div>
+          <div style="clear:both;">
+          </div>
+              <%end%>
+
+
+        </div>
+
+      </li>
+  <% end %>
+</ol>

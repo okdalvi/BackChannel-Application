@@ -1,0 +1,20 @@
+<%
+    votes_count = num_votes(post.id)
+
+    if votes_count == 1
+     if can_vote?(post.id)
+       output = "One person voted for this post"
+     else
+       output = "You voted for this post"
+
+     end
+
+    else if can_vote?(post.id)
+      output = "#{votes_count} people voted for this post"
+    else
+      output = "You and #{votes_count-1} other people voted for this post"
+    end
+    end
+%>
+<p><%= output %></p>
+<p><%#= link_to output, {:controller => :post_votes, :action => :show, :id => post.id} %></p>

@@ -1,0 +1,121 @@
+<p id="notice"><%= notice %></p>
+<br>
+
+<h3> Post Details</h3>
+     <br>
+<br>
+<p>
+  <h4>
+  <b>Title:</b>
+  </h4>
+  <%= @post.name %>
+</p>
+ <br>
+<p>
+  <h4>
+  <b>Content:</b>
+  </h4>
+  <%= @post.content %>
+</p>
+<br>
+
+
+<p><h4>
+  <b>Tag:</b>
+</h4>
+  <%= @post.tag %>
+</p>
+<br>
+
+
+<%# if @post.user_id != current_user.id %>
+    <%# if PostVote.count_by_sql("select count(*) from post_votes where user_id=#{current_user.id} and post_id = #{@post.id}") == 0 %>
+
+        <%#= button_to 'Vote', :controller => 'posts', :action => 'add_vote' , :id => @post.id %>
+    <%# end %>
+<%#end %>
+
+
+
+<%#= button_to 'Unvote', :controller => post, :action => :dec_vote%>
+
+<h3>Comments</h3>
+<table border=0>
+<% @post.comments.each do |comment| %>
+      <% @num1_votes = 0 %>
+      <% @num1_votes = CommentVote.count_by_sql("select count(*) from comment_votes where comment_id=#{comment.id}") %>
+
+          <tr>
+
+            <td><%= comment.comment %></td>
+            <% if signed_in? %>
+            </t>
+            <td><%= link_to '| Show ', comment %></td>
+            </t>
+            <%# if (comment.user_id==current_user.id)%>
+                <% if ((comment.user_id==current_user.id)|| current_user.admin==2 || (current_user.admin==1&&comment.user_id!=1)) %>
+
+          <td><%= link_to '| Edit ', edit_comment_path(comment) %></td>
+                <td><%= link_to '| Delete ', comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                  <% else %>
+                <td>| Edit</td>
+                <td>| Delete</td>
+            <% end %>
+
+            <td><%= "| Number of votes :#{@num1_votes}" %></td>
+
+
+            <% if comment.user_id != current_user.id %>
+                <% if CommentVote.count_by_sql("select count(*) from comment_votes where user_id=#{current_user.id} and comment_id = #{comment.id}") == 0 %>
+
+                    <td><%= link_to '| Vote', :controller => 'comments', :action => 'add_c_vote' , :id => comment.id %></td>
+                    <% else %>
+                    <td>| Vote</td>
+
+          <% end %>
+            <% else %>
+                <td>| Vote</td>
+            <% end %>
+
+
+            <%# if can_vote?(comment.id) && has_voted?(comment.id)%>
+     <%#= button_to 'Vote', {:controller => 'comments', :action => 'add_c_vote' , :id => comment.id}, {:class => 'btn btn-default btn-xs'}%>
+
+            <%# end %>
+
+            <%# if (comment.user_id==current_user.id)%>
+                <%#= link_to 'Edit', edit_comment_path(comment) %>
+                <%#= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <%# end %>
+            <%end%>
+          </tr>
+
+      <% end %>
+  <br>
+    </table>
+    </p>
+
+
+<br>
+<br>
+<% if signed_in? %>
+    <h3>Add a comment:</h3>
+    <%= form_for([@post, @post.comments.build]) do |f| %>
+
+        <p>
+          <%= f.label :body %><br />
+          <%= f.text_area :comment %>
+        </p>
+        <p>
+          <%= f.submit %>
+        </p>
+    <% end %>
+    <%= link_to 'Edit', edit_post_path(@post) %> |
+<% end %>
+<%= link_to 'Back', posts_path %>
+<%#= link_to 'Show comments', :controller =>'comments', :action => 'show', :post_id =>(@post.id)'%>
+<%#= link_to " Show Comments" , :controller => 'comments' , :action => 'show' %>
+<%#= link_to " New Comment" , :controller => 'comments' , :action => 'new' %>
+
+
+

@@ -1,0 +1,35 @@
+<% if !signed_in? %>
+    <h4> You can search a post based on its name, content, category, user or tag</h4>
+    </br>
+    <%= form_tag :controller => 'posts', :action => 'search' do %>
+        <%= text_field_tag :search, params[:search]%>
+        <%= submit_tag "Search", :name => nil, :class => 'btn btn-sm btn-primary' %>
+    <%end%>
+<%end%>
+<% if signed_in? %>
+    <div class="row">
+      <aside class="span4">
+        <section>
+          <%= render 'shared/user_info' %>
+        </section>
+      </aside>
+    </div>
+     <br/>
+    <br/>
+    <h3>Search Existing Posts</h3>
+    </br>
+    <h4> You can search a post based on its name, content, category, user or tag</h4>
+    </br>
+    </br>
+    <%= form_tag :controller => 'posts', :action => 'search' do %>
+        <%= text_field_tag :search, params[:search]%>
+        <%= submit_tag "Search", :name => nil, :class => 'btn btn-sm btn-primary' %>
+    <%end%>
+<% else %>
+    <div class="center hero-unit">
+      <h1>Welcome to the Wolfpack Live Forum</h1>
+
+      <%= button_to "Sign up now!", signup_path,
+                  class: "btn btn-large btn-primary" %>
+    </div>
+<%end %>
