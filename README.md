@@ -7,7 +7,7 @@ CSC 517
 Project 1
 
 Back-channel Application in Ruby on Rails
-
+https://www.codeship.io/projects/ff271e50-667c-0131-bb28-629583985eb6/status
 Team
 -----
 1) Apeksha Saxena – asaxena2
